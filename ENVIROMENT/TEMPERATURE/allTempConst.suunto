@@ -1,0 +1,67 @@
+NAME = "allTempConst";
+ACTIVITY = "";
+PUBLICITY = "Private"
+CATEGORY = "Environmental"
+DESCRIPTION = '''
+    display  all the below built_in variable in sequence, each will continue for myDisplayInterval seconds:
+        1.SUUNTO_TEMP 
+        2. SUUNTO_MIN_TEMP  
+        3. SUUNTO_MAX_TEMP 
+        4. SUUNTO_TEMP_PREV 
+        5. SUUNTO_TEMP_AVG  
+        6. SUUNTO_TEMP_MAX  
+        7. SUUNTO_TEMP_MIN 
+        8. SUUNTO_TEMP_DIFF
+'''
+TAGS = "allTempConst_Enviroment"
+WEBSITE = "https://github.com/ihgazni2/SuuntoAppsDevToolSet"
+OWN_VARIABLES = {
+   NAME:["myCounter","myDisplayInterval","myClassNumber","myRemainder"]
+   VALUE:[0,1,8,0]
+}
+CREAT_CODE = '''
+RESULT = 0;
+myClassNumber = 8;
+myCounter = myCounter + 1;
+myRemainder = myCounter - (myDisplayInterval*myClassNumber)* Suunto.floor(myCounter/(myDisplayInterval*myClassNumber));
+if(myRemainder < myDisplayInterval ){
+    prefix = "TEMP";
+    postfix = "C";
+    RESULT = SUUNTO_TEMP ;
+} 
+if((myRemainder >= myDisplayInterval)&&(myRemainder < 2*myDisplayInterval)){
+    prefix ="Tmin";
+    postfix = "C";
+    RESULT = SUUNTO_MIN_TEMP;
+}
+if((myRemainder >= 2*myDisplayInterval)&&(myRemainder < 3*myDisplayInterval)) {
+    prefix = "Tmax";
+    postfix = "C";
+    RESULT = SUUNTO_MAX_TEMP;
+}
+if((myRemainder >= 3*myDisplayInterval)&&(myRemainder < 4*myDisplayInterval)){
+    prefix = "Tpre";
+    postfix = "C";
+    RESULT = SUUNTO_TEMP_PREV;
+}
+if((myRemainder >= 4*myDisplayInterval)&&(myRemainder < 5*myDisplayInterval)) {
+    prefix = "avg";
+    postfix = "30"; 
+    RESULT = SUUNTO_TEMP_AVG[30];
+}
+if((myRemainder >= 5*myDisplayInterval)&&(myRemainder < 6*myDisplayInterval)){
+    prefix = "max";
+    postfix = "30";
+    RESULT = SUUNTO_TEMP_MAX[30];
+}
+if((myRemainder >= 6*myDisplayInterval)&&(myRemainder < 7*myDisplayInterval)) {
+    prefix = "min";
+    postfix = "30";
+    RESULT = SUUNTO_TEMP_MIN[30];
+}
+if((myRemainder >= 7*myDisplayInterval)&&(myRemainder < 8*myDisplayInterval)) {
+    prefix = "dif";
+    postfix = "30";
+    RESULT = SUUNTO_TEMP_DIFF[30];
+}
+'''
