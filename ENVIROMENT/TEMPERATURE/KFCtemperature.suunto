@@ -1,0 +1,36 @@
+NAME = "KFCtemperature";
+ACTIVITY = "";
+PUBLICITY = "Private"
+CATEGORY = "Environmental"
+DESCRIPTION = '''
+dispaly  current temperature in the below three scales,each continued for 1 second:
+    1. Kelvin
+    2. Fahrenheit
+    3. Celsius
+'''
+TAGS = "KFCtemperature_Enviroment"
+WEBSITE = "https://github.com/ihgazni2/SuuntoAppsDevToolSet"
+OWN_VARIABLES = {
+   NAME:["myCounter","myDisplayInterval","myClassNumber","myRemainder"]
+   VALUE:[0,1,3,0]
+}
+CREAT_CODE = '''
+myClassNumber = 3;
+myCounter = myCounter + 1;
+myRemainder = myCounter - (myDisplayInterval*myClassNumber)* Suunto.floor(myCounter/(myDisplayInterval*myClassNumber));
+if(myRemainder < myDisplayInterval ){
+    prefix = "T:";
+    postfix = "degC";
+    RESULT = SUUNTO_TEMP ;
+} 
+if((myRemainder >= myDisplayInterval)&&(myRemainder < 2*myDisplayInterval)){
+    prefix = "T:";
+    postfix = "degK";
+    RESULT = SUUNTO_TEMP + 273.15 ;
+}
+if(myRemainder >= 2*myDisplayInterval) {
+    prefix = "T:";
+    postfix = "degF";
+    RESULT = SUUNTO_TEMP * 9.0/5.0 + 32.0;
+}
+'''

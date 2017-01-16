@@ -1,0 +1,57 @@
+NAME = "allPressureConst";
+ACTIVITY = "";
+PUBLICITY = "Private"
+CATEGORY = "Environmental"
+DESCRIPTION = '''
+display  all the below built_in variable in sequence, each will continue for myDisplayInterval seconds:
+    1. SUUNTO_PRESSURE 
+    2. SUUNTO_PRESSURE_PREV  
+    3. SUUNTO_PRESSURE_AVG 
+    4. SUUNTO_PRESSURE_MAX  
+    5. SUUNTO_PRESSURE_MIN  
+    6. SUUNTO_PRESSURE_DIFF 
+
+'''
+TAGS = "allPressureConst_Environment"
+WEBSITE = "https://github.com/ihgazni2/SuuntoAppsDevToolSet"
+OWN_VARIABLES = {
+   NAME:["myCounter","myDisplayInterval","myClassNumber","myRemainder"]
+   VALUE:[0,1,6,0]
+}
+CREAT_CODE = '''
+RESULT = 0;
+myClassNumber = 6;
+myCounter = myCounter + 1;
+myRemainder = myCounter - (myDisplayInterval*myClassNumber)* Suunto.floor(myCounter/(myDisplayInterval*myClassNumber));
+if(myRemainder < myDisplayInterval ){
+    prefix = "P";
+    postfix = "hPa";
+    RESULT = SUUNTO_PRESSURE ;
+} 
+if((myRemainder >= myDisplayInterval)&&(myRemainder < 2*myDisplayInterval)){
+    prefix ="pre";
+    postfix = "hPa";
+    RESULT = SUUNTO_PRESSURE_PREV;
+}
+if((myRemainder >= 2*myDisplayInterval)&&(myRemainder < 3*myDisplayInterval)) {
+    prefix = "avg";
+    postfix = "30";
+    RESULT = SUUNTO_PRESSURE_AVG[30];
+}
+if((myRemainder >= 3*myDisplayInterval)&&(myRemainder < 4*myDisplayInterval)){
+    prefix = "max";
+    postfix = "30";
+    RESULT = SUUNTO_PRESSURE_MAX[30];
+}
+if((myRemainder >= 4*myDisplayInterval)&&(myRemainder < 5*myDisplayInterval)) {
+    prefix = "min";
+    postfix = "30"; 
+    RESULT = SUUNTO_PRESSURE_MIN[30];
+}
+if((myRemainder >= 5*myDisplayInterval)&&(myRemainder < 6*myDisplayInterval)){
+    prefix = "dif";
+    postfix = "30";
+    RESULT = SUUNTO_PRESSURE_DIFF[30];
+}
+
+'''

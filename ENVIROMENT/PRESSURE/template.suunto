@@ -1,0 +1,14 @@
+NAME = "";
+ACTIVITY = "";
+PUBLICITY = ""
+CATEGORY = ""
+DESCRIPTION = '''
+'''
+TAGS = ""
+WEBSITE = "https://github.com/ihgazni2/SuuntoAppsDevToolSet"
+OWN_VARIABLES = {
+   NAME:["myCounter","myDisplayInterval","myClassNumber","myRemainder"]
+   VALUE:[0,1,3,0]
+}
+CREAT_CODE = '''
+'''

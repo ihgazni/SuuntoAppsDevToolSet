@@ -1,0 +1,65 @@
+NAME = "pressureWithScale";
+ACTIVITY = "";
+PUBLICITY = "Private"
+CATEGORY = "Environmental"
+DESCRIPTION = '''
+dispaly  current pressure in the below nine scales,each continued for 1 second:
+    1. Pa
+    2. hPa  Pa * 100
+    3. kpa  Pa * 1000
+    4. bar  Pa * 100000
+    5. atm  Pa * 101325
+    6. mmHg Pa * 101325 / 760
+    7. mH2O Pa / 9800 
+    8. psi  Pa * 100000 /14.5
+    9. at   Pa * 98000
+'''
+TAGS = "pressureWithScale_Environment"
+WEBSITE = "https://github.com/ihgazni2/SuuntoAppsDevToolSet"
+OWN_VARIABLES = {
+   NAME:["myCounter","myDisplayInterval","myClassNumber","myRemainder","myPa"]
+   VALUE:[0,1,9,0]
+}
+CREAT_CODE = '''
+RESULT = 0;
+myClassNumber = 9;
+myCounter = myCounter + 1;
+myRemainder = myCounter - (myDisplayInterval*myClassNumber)* Suunto.floor(myCounter/(myDisplayInterval*myClassNumber));
+myPa = SUUNTO_PRESSURE * 100 ;
+if(myRemainder < myDisplayInterval ){
+    postfix = "mPa";
+    RESULT = myPa / 1000000;
+} 
+if((myRemainder >= myDisplayInterval)&&(myRemainder < 2*myDisplayInterval)){
+    postfix = "hPa";
+    RESULT = SUUNTO_PRESSURE ;
+}
+if((myRemainder >= 2*myDisplayInterval)&&(myRemainder < 3*myDisplayInterval)) {
+    postfix = "kPa";
+    RESULT = myPa /1000;
+}
+if((myRemainder >= 3*myDisplayInterval)&&(myRemainder < 4*myDisplayInterval)){
+    postfix = "bar";
+    RESULT = myPa / 100000 ;
+}
+if((myRemainder >= 4*myDisplayInterval)&&(myRemainder < 5*myDisplayInterval)) {
+    postfix = "atm";
+    RESULT = myPa / 101325 ;
+}
+if((myRemainder >= 5*myDisplayInterval)&&(myRemainder < 6*myDisplayInterval)){
+    postfix = "mmHg";
+    RESULT = myPa * 760 /101325;
+}
+if((myRemainder >= 6*myDisplayInterval)&&(myRemainder < 7*myDisplayInterval)) {
+    postfix = "mH2O";
+    RESULT = myPa * 9800 /101325;
+}
+if((myRemainder >= 7*myDisplayInterval)&&(myRemainder < 8*myDisplayInterval)) {
+    postfix = "psi";
+    RESULT = myPa * 14.5 / 100000;
+}
+if((myRemainder >= 8*myDisplayInterval)&&(myRemainder < 9*myDisplayInterval)) {
+    postfix = "at";
+    RESULT = myPa / 98000;
+}
+'''
