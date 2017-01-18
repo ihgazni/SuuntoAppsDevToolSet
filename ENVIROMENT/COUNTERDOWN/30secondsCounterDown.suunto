@@ -1,0 +1,44 @@
+NAME = "30SecondsCountDown";
+ACTIVITY = "";
+PUBLICITY = "Private"
+CATEGORY = "Counter"
+DESCRIPTION = '''
+    a 30 seconds countdown:
+    it will alarm a beep at  each second  of the last 5 seconds during the 30seconds circle.
+'''
+TAGS = "30SecondsCountDown"
+WEBSITE = "https://github.com/ihgazni2/SuuntoAppsDevToolSet"
+OWN_VARIABLES = {
+   NAME:["myCounter","myDisplayCounter"]
+   VALUE:[29,30]
+}
+COMPATIBILITY = {
+    "Ambit"  = {"size" = "35%","compatible" = 1},
+    "Ambit2 S" = {"size" = "17%","compatible" = 1},
+    "Ambit2" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Peak" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Sport"  = {"size" = "17%","compatible" = 1},
+    "Ambit2 R" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Run" = {"size" = "17%","compatible" = 1},
+    "Traverse" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Vertical" = {"size" = "17%","compatible" = 1},
+    "Traverse Alpha" = {"size" = "17%","compatible" = 1}
+}
+ICON = "logo_5.png"
+CREAT_CODE = '''
+/* We need two variables because it will auto resequsence when using only one variable*/
+
+if(myCounter > 0) {
+  myDisplayCounter = myCounter + 1;
+  RESULT = myDisplayCounter;
+  if(myDisplayCounter < 5) {
+      Suunto.alarmBeep();
+  }
+  myCounter = myCounter - 1;
+} else {
+  myDisplayCounter = myCounter + 1;
+  RESULT = myDisplayCounter;
+  Suunto.alarmBeep();
+  myCounter = 29;
+}
+'''
