@@ -1,0 +1,36 @@
+NAME = "ROUNDCOUNTER";
+ACTIVITY = "Pool swimming";
+PUBLICITY = "Private"
+CATEGORY = "Counter"
+DESCRIPTION = '''
+how many rounds have been swimmed,
+1 ROUND = 2 * SUUNTO_SWIMMING_POOL_LENGTH,
+which means going there and back.
+by default , the SUUNTO_DISTANCE whose scale unit is kilometers  need to multiply 1000  
+to make it to meters.
+'''
+TAGS = "roundcounter"
+WEBSITE = "https://github.com/ihgazni2/SuuntoAppsDevToolSet"
+OWN_VARIABLES = {
+   NAME:[]
+   VALUE:[]
+}
+COMPATIBILITY = {
+    "Ambit"  = {"size" = "35%","compatible" = 1},
+    "Ambit2 S" = {"size" = "17%","compatible" = 1},
+    "Ambit2" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Peak" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Sport"  = {"size" = "17%","compatible" = 1},
+    "Ambit2 R" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Run" = {"size" = "17%","compatible" = 1},
+    "Traverse" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Vertical" = {"size" = "17%","compatible" = 1},
+    "Traverse Alpha" = {"size" = "17%","compatible" = 1}
+}
+ICON = "ROUNDCOUNTER.logo.png"
+POSTFIX = "ROUNDS"
+CREAT_CODE = '''
+/* We need two variables because it will auto resequsence when using only one variable*/
+
+RESULT = (SUUNTO_DISTANCE * 1000) / (SUUNTO_SWIMMING_POOL_LENGTH * 2);
+'''

@@ -1,0 +1,50 @@
+NAME = "presetSecsCounterDown";
+ACTIVITY = "";
+PUBLICITY = "Private"
+CATEGORY = "Counter"
+DESCRIPTION = '''
+    a endless circle counterdown with a  preset seconds:
+    you can set the seconds at start (a trick using the POOL LENGTH of pool swmming activity);
+    select CUSTOM and then input the preset counterdown seconds;
+    it will alarm a beep at  each second  of the last 5 seconds during the 30seconds circle.
+'''
+TAGS = "30SecondsCountDown"
+WEBSITE = "https://github.com/ihgazni2/SuuntoAppsDevToolSet"
+OWN_VARIABLES = {
+   NAME:["myCounter","myDisplayCounter","myIndicator"]
+   VALUE:[29,30,0]
+}
+COMPATIBILITY = {
+    "Ambit"  = {"size" = "35%","compatible" = 1},
+    "Ambit2 S" = {"size" = "17%","compatible" = 1},
+    "Ambit2" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Peak" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Sport"  = {"size" = "17%","compatible" = 1},
+    "Ambit2 R" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Run" = {"size" = "17%","compatible" = 1},
+    "Traverse" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Vertical" = {"size" = "17%","compatible" = 1},
+    "Traverse Alpha" = {"size" = "17%","compatible" = 1}
+}
+ICON = "presetSecsCounterDown.logo.png"
+prefix = ""
+postfix =　""
+CREAT_CODE = '''
+/* We need two variables because it will auto resequsence when using only one variable*/
+
+if(myIndicator == 0){
+    myCounter = SUUNTO_SWIMMING_POOL_LENGTH;
+}
+if(myCounter > 0) {
+  myDisplayCounter = myCounter - 1;
+  RESULT = myDisplayCounter;
+  if(myCounter < 5) {
+      Suunto.alarmBeep();
+  }
+  myCounter = myCounter - 1;
+  myIndicator = myIndicator + 1;
+} else {
+  Suunto.alarmBeep();
+  myIndicator = 0;
+}
+'''
