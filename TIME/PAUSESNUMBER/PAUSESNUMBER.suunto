@@ -10,7 +10,7 @@ DESCRIPTION = '''
 TAGS = "totaltime"
 WEBSITE = "https://github.com/ihgazni2/SuuntoAppsDevToolSet"
 OWN_VARIABLES = {
-   NAME:["myLastDur",myState","myLastState","myPausesNumber","myLLastDur"]
+   NAME:["myLastDur",myState","myLastState","myPausesNumber","myReadyToUpdate"]
    VALUE:[0,0,0,0,0]
 }
 COMPATIBILITY = {
@@ -38,9 +38,8 @@ if(SUUNTO_DURATION == 0.0){
     myState = 0;
     myLastState = 0;
 } else {
-  /*started,from the testing result we noticed that even if we dont pause sometimes the SUUNTO_DURATION update have a delay:
-  this will make SUUNTO_DURATION equals myLastDur; so we need to observe for 2 seconds*/
-    if((SUUNTO_DURATION > myLastDur)&&(SUUNTO_DURATION > myLLastDur)){
+  /*started*/
+    if(SUUNTO_DURATION > myLastDur){
         myState = 0;
     } else {
         myState = 1;
@@ -48,13 +47,19 @@ if(SUUNTO_DURATION == 0.0){
 }
 /*State = 0 means SUUNTO_DURATION increased,State = 1 means SUUNTO_DURATION keep the same as last second*/
 if((myState == 1)&&(myLastState == 0)) {
-    postfix = "meet";
-    myPausesNumber = myPausesNumber + 1;
+   /*from the testing result we noticed that even if we dont pause sometimes the SUUNTO_DURATION update may have a delay:
+     this will make SUUNTO_DURATION equals myLastDur; so we need to do further check at next round to  make sure*/
+  myReadyToUpdate = 1;   
 }
+/*do further check at next round to  make sure*/
+if((myState == 1)&&(myLastState == 1)&&(myReadyToUpdate == 1)){
+    myPausesNumber = myPausesNumber + 1;
+    myReadyToUpdate = 0;
+} 
 myLLastDur = myLastDur;
-myLastState = myState;
 myLLastDur = myLastDur;
 myLastDur = SUUNTO_DURATION;
+myLastState = myState;
 RESULT = myPausesNumber;
 '''
 /*put this app in the views(third) DISPLAY to avoid the delay effect*/
