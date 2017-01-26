@@ -5,12 +5,13 @@ PUBLICITY = "Private"
 CATEGORY = "Counter"
 DESCRIPTION = '''
    how many times of PAUSEs excuted.
+   if a pasue continued for less than 2 seonds, this pause may be ignored. 
 '''
 TAGS = "totaltime"
 WEBSITE = "https://github.com/ihgazni2/SuuntoAppsDevToolSet"
 OWN_VARIABLES = {
-   NAME:["myLastDur",myState","myLastState","myPausesNumber"]
-   VALUE:[0,0,0,0]
+   NAME:["myLastDur",myState","myLastState","myPausesNumber","myLLastDur"]
+   VALUE:[0,0,0,0,0]
 }
 COMPATIBILITY = {
     "Ambit"  = {"size" = "35%","compatible" = 1},
@@ -30,30 +31,32 @@ POSTFIX = "PAUSEs"
 FORMAT = ""
 CREAT_CODE = '''
 /* While in sport mode do this once per second */
-
-'''
-/*State = 0 means SUUNTO_DURATION increased,State = 1 means SUUNTO_DURATION keep the same as last second*/
-if((myState == 1)&&(myLastState == 0)) {
-    myPausesNumber = myPausesNumber + 1;
-}
+/*update state*/
 if(SUUNTO_DURATION == 0.0){
+    myLLastDur = 0;
     myLastDur = 0;
     myState = 0;
     myLastState = 0;
 } else {
-    /*started*/
-    if(SUUNTO_DURATION > myLastDur){
-        myLastState = myState;
+  /*started,from the testing result we noticed that even if we dont pause sometimes the SUUNTO_DURATION update have a delay:
+  this will make SUUNTO_DURATION equals myLastDur; so we need to observe for 2 seconds*/
+    if((SUUNTO_DURATION > myLastDur)&&(SUUNTO_DURATION > myLLastDur)){
         myState = 0;
     } else {
-        myLastState = myState;
         myState = 1;
     }
 }
+/*State = 0 means SUUNTO_DURATION increased,State = 1 means SUUNTO_DURATION keep the same as last second*/
+if((myState == 1)&&(myLastState == 0)) {
+    postfix = "meet";
+    myPausesNumber = myPausesNumber + 1;
+}
+myLLastDur = myLastDur;
+myLastState = myState;
+myLLastDur = myLastDur;
 myLastDur = SUUNTO_DURATION;
 RESULT = myPausesNumber;
 '''
-
 /*put this app in the views(third) DISPLAY to avoid the delay effect*/
 
 
