@@ -1,0 +1,51 @@
+NAME = "TotalTime";
+URL = "http://www.movescount.cn/apps/app11530373-TotalTime"
+ACTIVITY = "";
+PUBLICITY = "Private"
+CATEGORY = "Counter"
+DESCRIPTION = '''
+    START_TIME = SUUNTO_TIME (when starting)
+    CURRENT_TIME = SUUNTO_TIME
+    TOTAL_TIME = CURRENT_TIME - START_TIME
+    TOTAL_TIME = SUUNTO_DURATION + PAUSED_TIME
+'''
+TAGS = "totaltime"
+WEBSITE = "https://github.com/ihgazni2/SuuntoAppsDevToolSet"
+OWN_VARIABLES = {
+   NAME:["myStartTime"]
+   VALUE:[0]
+}
+COMPATIBILITY = {
+    "Ambit"  = {"size" = "35%","compatible" = 1},
+    "Ambit2 S" = {"size" = "17%","compatible" = 1},
+    "Ambit2" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Peak" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Sport"  = {"size" = "17%","compatible" = 1},
+    "Ambit2 R" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Run" = {"size" = "17%","compatible" = 1},
+    "Traverse" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Vertical" = {"size" = "17%","compatible" = 1},
+    "Traverse Alpha" = {"size" = "17%","compatible" = 1}
+}
+ICON = "TOTALTIME.logo.png"
+PREFIX = "TOTIME"
+POSTFIX = ""
+FORMAT = "time"
+CREAT_CODE = '''
+/* While in sport mode do this once per second */
+if(SUUNTO_TIME < myStartTime){
+    RESULT =  SUUNTO_TIME + 86400 -  myStartTime;
+} else {
+    RESULT =  SUUNTO_TIME - myStartTime;
+}
+/*This is a trick to resolve the delay comparing with SUUNTO_DURATION */
+RESULT = RESULT - 1.0;
+if(RESULT < 0){
+  RESULT = 0.0;
+}
+/*SUUNTO_DURATION==0.0 means <not started yet>*/
+if(SUUNTO_DURATION==0.0){
+    myStartTime = SUUNTO_TIME;
+    RESULT = 0.0;
+} 
+'''

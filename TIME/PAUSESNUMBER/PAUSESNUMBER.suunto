@@ -1,0 +1,60 @@
+NAME = "PausesNumber";
+URL = "http://www.movescount.cn/apps/app11531811-PAUSEsNumber"
+ACTIVITY = "";
+PUBLICITY = "Private"
+CATEGORY = "Counter"
+DESCRIPTION = '''
+   how many times of PAUSEs excuted.
+'''
+TAGS = "totaltime"
+WEBSITE = "https://github.com/ihgazni2/SuuntoAppsDevToolSet"
+OWN_VARIABLES = {
+   NAME:["myLastDur",myState","myLastState","myPausesNumber"]
+   VALUE:[0,0,0,0]
+}
+COMPATIBILITY = {
+    "Ambit"  = {"size" = "35%","compatible" = 1},
+    "Ambit2 S" = {"size" = "17%","compatible" = 1},
+    "Ambit2" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Peak" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Sport"  = {"size" = "17%","compatible" = 1},
+    "Ambit2 R" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Run" = {"size" = "17%","compatible" = 1},
+    "Traverse" = {"size" = "17%","compatible" = 1},
+    "Ambit3 Vertical" = {"size" = "17%","compatible" = 1},
+    "Traverse Alpha" = {"size" = "17%","compatible" = 1}
+}
+ICON = "PausEsNumber.logo.png"
+PREFIX = ""
+POSTFIX = "PAUSEs"
+FORMAT = ""
+CREAT_CODE = '''
+/* While in sport mode do this once per second */
+
+'''
+/*State = 0 means SUUNTO_DURATION increased,State = 1 means SUUNTO_DURATION keep the same as last second*/
+if((myState == 1)&&(myLastState == 0)) {
+    myPausesNumber = myPausesNumber + 1;
+}
+if(SUUNTO_DURATION == 0.0){
+    myLastDur = 0;
+    myState = 0;
+    myLastState = 0;
+} else {
+    /*started*/
+    if(SUUNTO_DURATION > myLastDur){
+        myLastState = myState;
+        myState = 0;
+    } else {
+        myLastState = myState;
+        myState = 1;
+    }
+}
+myLastDur = SUUNTO_DURATION;
+RESULT = myPausesNumber;
+'''
+
+/*put this app in the views(third) DISPLAY to avoid the delay effect*/
+
+
+
